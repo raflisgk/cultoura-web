@@ -552,6 +552,7 @@ function DiscoverHeritage() {
                 data-cursor-big
                 onHoverStart={() => setHovered(c.name)}
                 onHoverEnd={() => setHovered(null)}
+                onClick={() => setHovered(hovered === c.name ? null : c.name)}
                 className="relative rounded-2xl overflow-hidden cursor-pointer"
                 style={{ height: 380 }}
                 whileHover={{ y: -6 }}
@@ -963,6 +964,7 @@ function ProductTile({ p, index, hovered, setHovered }) {
       style={{ aspectRatio: "3/4", background: bg }}
       onMouseEnter={() => setHovered(p.name)}
       onMouseLeave={() => setHovered(null)}
+      onClick={() => setHovered(hovered === p.name ? null : p.name)}
     >
       {p.image && (
         <motion.img
