@@ -407,7 +407,14 @@ function Hero() {
           </p>
         </Reveal>
         <Reveal delay={1.65}>
-          
+          <button
+            type="button"
+            onClick={(e) => { e.preventDefault(); document.getElementById('map')?.scrollIntoView({behavior: 'smooth'}); }}
+            className="font-body mt-10 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-transform hover:scale-105"
+            style={{ backgroundColor: "#C96A3D", color: "#F8F4EC" }}
+          >
+            Explore Heritage <ArrowRight size={16} />
+          </button>
         </Reveal>
       </motion.div>
 
@@ -1057,7 +1064,14 @@ function FeaturedCollection() {
 
         {COLLECTION.length > 8 && (
           <Reveal delay={0.1} className="flex justify-center mt-14">
-            
+            <Link
+              to="/koleksi"
+              className="font-body inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-transform hover:scale-105"
+              style={{ backgroundColor: "#214E3B", color: "#F8F4EC" }}
+            >
+              Jelajahi Koleksi Lainnya
+              <ArrowRight size={16} />
+            </Link>
           </Reveal>
         )}
       </div>
@@ -1103,7 +1117,14 @@ function JoinPreservation() {
             ))}
           </div>
 
-          
+          <button
+            type="button"
+            onClick={(e) => { e.preventDefault(); document.getElementById('collection')?.scrollIntoView({behavior: 'smooth'}); }}
+            className="font-body mt-9 inline-flex items-center gap-2 rounded-full px-8 py-4 text-sm font-medium transition-transform hover:scale-105"
+            style={{ backgroundColor: "#C96A3D", color: "#F8F4EC" }}
+          >
+            Start Exploring <ArrowRight size={16} />
+          </button>
         </Reveal>
       </div>
     </section>
