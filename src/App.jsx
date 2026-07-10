@@ -422,14 +422,14 @@ function Hero() {
         </Reveal>
         <Reveal delay={1.65}>
           <Magnetic>
-            <a
-              href="#map"
+            <button
+              type="button"
               onClick={(e) => { e.preventDefault(); document.getElementById('map')?.scrollIntoView({behavior: 'smooth'}); }}
               className="font-body mt-10 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium"
               style={{ backgroundColor: "#C96A3D", color: "#F8F4EC" }}
             >
               Explore Heritage <ArrowRight size={16} />
-            </a>
+            </button>
           </Magnetic>
         </Reveal>
       </motion.div>
@@ -790,14 +790,14 @@ function StoryBehindProduct() {
             </div>
 
             <Magnetic>
-              <a
-                href="#collection"
+              <button
+                type="button"
                 onClick={(e) => { e.preventDefault(); document.getElementById('collection')?.scrollIntoView({behavior: 'smooth'}); }}
                 className="font-body mt-8 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium"
                 style={{ backgroundColor: "#214E3B", color: "#F8F4EC" }}
               >
                 Shop This Heritage <ChevronRight size={15} />
-              </a>
+              </button>
             </Magnetic>
           </Reveal>
         </div>
@@ -1088,14 +1088,14 @@ function JoinPreservation() {
           </div>
 
           <Magnetic>
-            <a
-              href="#collection"
+            <button
+              type="button"
               onClick={(e) => { e.preventDefault(); document.getElementById('collection')?.scrollIntoView({behavior: 'smooth'}); }}
               className="font-body mt-9 inline-flex items-center gap-2 rounded-full px-8 py-4 text-sm font-medium"
               style={{ backgroundColor: "#C96A3D", color: "#F8F4EC" }}
             >
               Start Exploring <ArrowRight size={16} />
-            </a>
+            </button>
           </Magnetic>
         </Reveal>
       </div>
