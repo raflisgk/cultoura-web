@@ -310,18 +310,20 @@ function Navbar() {
         e.preventDefault();
         const el = document.getElementById(href.substring(1));
         if (el) {
+          const y = el.getBoundingClientRect().top + window.scrollY - 80;
           setTimeout(() => {
             try {
-              el.scrollIntoView({ behavior: 'smooth' });
+              window.scrollTo({ top: y, behavior: 'smooth' });
             } catch (err) {
-              el.scrollIntoView();
+              window.scrollTo(0, y);
             }
           }, 50);
         }
       }
+      
+      // Gunakan pemanggilan fungsi langsung tanpa timeout jika memungkinkan
       if (rest.onClick) {
-        // Beri jeda sangat singkat agar animasi tutup menu tidak membatalkan scroll di iOS
-        setTimeout(() => rest.onClick(e), 10);
+        rest.onClick();
       }
     };
     return onLanding ? (
