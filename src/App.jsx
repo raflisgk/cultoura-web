@@ -304,12 +304,21 @@ function Navbar() {
     ["Featured Collection", "#collection"],
   ];
 
-  const NavLink = ({ href, children, ...rest }) =>
-    onLanding ? (
-      <a href={href} {...rest}>{children}</a>
+  const NavLink = ({ href, children, ...rest }) => {
+    const handleClick = (e) => {
+      if (onLanding && href.startsWith("#")) {
+        e.preventDefault();
+        const el = document.getElementById(href.substring(1));
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
+      if (rest.onClick) rest.onClick(e);
+    };
+    return onLanding ? (
+      <a href={href} {...rest} onClick={handleClick}>{children}</a>
     ) : (
       <Link to={`/${href}`} {...rest}>{children}</Link>
     );
+  };
 
   return (
     <motion.header
@@ -1124,10 +1133,18 @@ function FooterLink({ path, hash, external, children }) {
     onMouseLeave: (e) => (e.currentTarget.style.color = "rgba(33,78,59,0.7)"),
   };
 
+  const handleClick = (e) => {
+    if (onSamePage && hash) {
+      e.preventDefault();
+      const el = document.getElementById(hash.substring(1));
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return onSamePage ? (
-    <a href={hash} {...commonProps}>{children}</a>
+    <a href={hash} onClick={handleClick} {...commonProps}>{children}</a>
   ) : (
-    <Link to={`${path}${hash}`} {...commonProps}>{children}</Link>
+    <Link to={`${path}${hash || ""}`} {...commonProps}>{children}</Link>
   );
 }
 
