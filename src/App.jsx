@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, AnimatePresence, useInView, useMotionV
 import {
   ArrowRight, ArrowLeft, ArrowDown, MapPin, Play, ChevronRight, Sparkles, Heart, Menu, X,
   ShoppingBag, Ticket, HandHeart, Leaf, Droplet, Shuffle, Package, Truck,
-  Quote, Globe2, Users, Layers, PenTool, Waves, Scroll, Swords, Hammer
+  Quote, Globe2, Users, Layers, PenTool, Waves, Scroll, Swords, Hammer, Volume2, VolumeX
 } from "lucide-react";
 import { INDONESIA_PATH, INDONESIA_VIEWBOX } from "./indonesiaMap";
 
@@ -222,14 +222,18 @@ function CustomCursor() {
   const y = useMotionValue(-100);
   const sx = useSpring(x, { stiffness: 500, damping: 40 });
   const sy = useSpring(y, { stiffness: 500, damping: 40 });
-  const [big, setBig] = useState(false);
+  const [state, setState] = useState({ big: false, text: "" });
 
   useEffect(() => {
     const move = (e) => {
       x.set(e.clientX);
       y.set(e.clientY);
       const el = document.elementFromPoint(e.clientX, e.clientY);
-      setBig(!!el?.closest("a,button,[data-cursor-big]"));
+      const target = el?.closest("a,button,[data-cursor-big]");
+      setState({
+        big: !!target,
+        text: target?.getAttribute("data-cursor-text") || ""
+      });
     };
     window.addEventListener("mousemove", move);
     return () => window.removeEventListener("mousemove", move);
@@ -237,15 +241,31 @@ function CustomCursor() {
 
   return (
     <motion.div
-      className="hidden md:block"
+      className="hidden md:flex items-center justify-center font-display text-[10px] tracking-widest uppercase pointer-events-none z-[9999]"
       style={{
         position: "fixed", left: 0, top: 0, x: sx, y: sy, translateX: "-50%", translateY: "-50%",
-        width: big ? 46 : 10, height: big ? 46 : 10, borderRadius: "50%",
-        border: big ? "1px solid #C96A3D" : "none",
-        backgroundColor: big ? "rgba(201,106,61,0.08)" : "#C96A3D",
-        pointerEvents: "none", zIndex: 999, transition: "width 0.25s, height 0.25s, background-color 0.25s",
+        width: state.text ? 72 : (state.big ? 46 : 10), 
+        height: state.text ? 72 : (state.big ? 46 : 10), 
+        borderRadius: "50%",
+        border: state.big ? "1px solid rgba(201,106,61,0.5)" : "none",
+        backgroundColor: state.text ? "#C96A3D" : (state.big ? "rgba(201,106,61,0.08)" : "#C96A3D"),
+        backdropFilter: state.big && !state.text ? "blur(2px)" : "none",
+        color: "#F8F4EC",
+        transition: "width 0.2s, height 0.2s, background-color 0.2s, backdrop-filter 0.2s"
       }}
-    />
+    >
+      <AnimatePresence>
+        {state.text && (
+          <motion.span 
+            initial={{ opacity: 0, scale: 0.5 }} 
+            animate={{ opacity: 1, scale: 1 }} 
+            exit={{ opacity: 0, scale: 0.5 }}
+          >
+            {state.text}
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 }
 
@@ -483,6 +503,7 @@ function Hero() {
 
 function HeritageMap() {
   const [active, setActive] = useState(REGIONS[0]);
+  const [zoomedRegion, setZoomedRegion] = useState(null);
 
   return (
     <section id="map" className="py-28 px-6 md:px-10" style={{ backgroundColor: "#F8F4EC" }}>
@@ -495,16 +516,25 @@ function HeritageMap() {
         </Reveal>
 
         <div className="grid md:grid-cols-5 gap-10 mt-14 items-center">
-          <Reveal delay={0.1} className="md:col-span-3 relative rounded-3xl overflow-hidden">
-            <div className="relative aspect-[1000/460] rounded-3xl" style={{ backgroundColor: "#EDE6D6" }}>
-              <svg viewBox={INDONESIA_VIEWBOX} preserveAspectRatio="xMidYMid meet" className="absolute inset-0 w-full h-full">
-                <path d={INDONESIA_PATH} fill={UMBER} fillOpacity={0.16} stroke={UMBER} strokeOpacity={0.55} strokeWidth={0.8} />
-              </svg>
-              {REGIONS.map((r) => (
+          <Reveal delay={0.1} className="md:col-span-3 relative rounded-3xl">
+            <div className="relative overflow-hidden rounded-3xl" style={{ backgroundColor: "#EDE6D6" }}>
+              <motion.div 
+                className="relative aspect-[1000/460]"
+                animate={{ scale: zoomedRegion ? 3.5 : 1 }}
+                style={{ transformOrigin: `${active.x}% ${active.y}%` }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <svg viewBox={INDONESIA_VIEWBOX} preserveAspectRatio="xMidYMid meet" className="absolute inset-0 w-full h-full">
+                  <path d={INDONESIA_PATH} fill={UMBER} fillOpacity={0.16} stroke={UMBER} strokeOpacity={0.55} strokeWidth={0.8} />
+                </svg>
+                {REGIONS.map((r) => (
                 <button
                   key={r.id}
-                  onMouseEnter={() => setActive(r)}
-                  onClick={() => setActive(r)}
+                  onMouseEnter={() => { if (!zoomedRegion) setActive(r) }}
+                  onClick={() => {
+                    setActive(r);
+                    setZoomedRegion(r);
+                  }}
                   className="absolute -translate-x-1/2 -translate-y-1/2 group"
                   style={{ left: `${r.x}%`, top: `${r.y}%`, zIndex: active.id === r.id ? 10 : 1 }}
                   aria-label={r.name}
@@ -529,6 +559,49 @@ function HeritageMap() {
                   </span>
                 </button>
               ))}
+              </motion.div>
+
+              {/* Overlay Modal (Polaroid) */}
+              <AnimatePresence>
+                {zoomedRegion && (
+                  <motion.div 
+                    className="absolute inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4 }}
+                    onClick={() => setZoomedRegion(null)}
+                  >
+                    <motion.div 
+                      className="p-3 rounded-xl shadow-2xl max-w-[280px] md:max-w-xs w-full mx-4 cursor-default"
+                      style={{ backgroundColor: "#FFFDF9" }}
+                      initial={{ scale: 0.8, y: 20, rotate: -2 }}
+                      animate={{ scale: 1, y: 0, rotate: 0 }}
+                      exit={{ scale: 0.8, y: 20, rotate: 2 }}
+                      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <img src={zoomedRegion.image} alt={zoomedRegion.craft} className="w-full h-40 object-cover rounded-lg" />
+                      <div className="mt-3 px-1">
+                        <div className="flex items-center gap-1 font-body text-[10px] uppercase tracking-wider" style={{ color: "#C96A3D" }}>
+                          <MapPin size={11} /> {zoomedRegion.name}
+                        </div>
+                        <h3 className="font-display text-xl mt-1 leading-tight" style={{ color: "#214E3B" }}>{zoomedRegion.craft}</h3>
+                        <p className="font-body text-xs mt-2 leading-relaxed line-clamp-3" style={{ color: "rgba(33,78,59,0.75)" }}>
+                          {zoomedRegion.story}
+                        </p>
+                        <button 
+                          className="mt-4 w-full py-2.5 rounded-full font-body text-xs font-semibold tracking-wide transition-transform hover:scale-105 active:scale-95"
+                          style={{ backgroundColor: "#214E3B", color: "#F8F4EC" }}
+                          onClick={() => setZoomedRegion(null)}
+                        >
+                          Tutup Peta
+                        </button>
+                      </div>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
             <p className="font-body text-[11px] mt-3 text-center" style={{ color: "rgba(33,78,59,0.45)" }}>
               20 titik kerajinan dari Aceh hingga Papua — arahkan kursor atau ketuk untuk menjelajah.
@@ -584,6 +657,7 @@ function DiscoverHeritage() {
             <Reveal key={c.name} delay={i * 0.08}>
               <motion.div
                 data-cursor-big
+                data-cursor-text="Lihat"
                 onHoverStart={() => { if (window.matchMedia('(hover: hover)').matches) setHovered(c.name) }}
                 onHoverEnd={() => { if (window.matchMedia('(hover: hover)').matches) setHovered(null) }}
                 onClick={() => setHovered(hovered === c.name ? null : c.name)}
@@ -1468,14 +1542,71 @@ function AboutPage() {
   );
 }
 
+// Soundscape (Web Audio API)
+let audioCtx = null;
+const playClick = () => {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.05);
+    
+    gain.gain.setValueAtTime(0, audioCtx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.15, audioCtx.currentTime + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+    
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.06);
+  } catch(e) {}
+};
+
+function SoundscapeController() {
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    if (!enabled) return;
+    const handleMouseOver = (e) => {
+      if (e.target.closest("a, button, [data-cursor-big]")) {
+        playClick();
+      }
+    };
+    document.addEventListener("mouseover", handleMouseOver);
+    return () => document.removeEventListener("mouseover", handleMouseOver);
+  }, [enabled]);
+
+  return (
+    <button 
+      onClick={() => setEnabled(!enabled)}
+      className="fixed bottom-6 left-6 z-[999] p-3 rounded-full shadow-lg transition-transform hover:scale-110 active:scale-95 group"
+      style={{ backgroundColor: enabled ? "#C96A3D" : "#F8F4EC", color: enabled ? "#F8F4EC" : "#214E3B", border: "1px solid rgba(33,78,59,0.15)" }}
+      aria-label="Toggle Sound"
+    >
+      {enabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
+      <span className="absolute left-full ml-3 top-1/2 -translate-y-1/2 bg-black/70 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+        {enabled ? "Suara Aktif" : "Suara Nonaktif"}
+      </span>
+    </button>
+  );
+}
+
 // App
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/koleksi" element={<CollectionPage />} />
-      <Route path="/tentang-kami" element={<AboutPage />} />
-    </Routes>
+    <>
+      <SoundscapeController />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/koleksi" element={<CollectionPage />} />
+        <Route path="/tentang-kami" element={<AboutPage />} />
+      </Routes>
+    </>
   );
 }
