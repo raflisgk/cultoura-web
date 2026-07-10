@@ -192,6 +192,30 @@ function KineticText({ text, className, style, delay = 0 }) {
 }
 
 // Magnetic hover effect for buttons
+function Magnetic({ children, strength = 0.35 }) {
+  const ref = useRef(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const sx = useSpring(x, { stiffness: 150, damping: 12 });
+  const sy = useSpring(y, { stiffness: 150, damping: 12 });
+
+  const onMove = useCallback((e) => {
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    x.set((e.clientX - r.left - r.width / 2) * strength);
+    y.set((e.clientY - r.top - r.height / 2) * strength);
+  }, [strength, x, y]);
+
+  const onLeave = useCallback(() => { x.set(0); y.set(0); }, [x, y]);
+
+  return (
+    <motion.div ref={ref} onMouseMove={onMove} onMouseLeave={onLeave} style={{ x: sx, y: sy, display: "inline-block" }}>
+      {children}
+    </motion.div>
+  );
+}
+
 function IntroCurtain({ done, setDone }) {
   useEffect(() => {
     const t = setTimeout(() => setDone(true), 3200);
@@ -407,14 +431,16 @@ function Hero() {
           </p>
         </Reveal>
         <Reveal delay={1.65}>
-          <button
-            type="button"
-            onClick={(e) => { e.preventDefault(); document.getElementById('map')?.scrollIntoView({behavior: 'smooth'}); }}
-            className="font-body mt-10 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-transform hover:scale-105"
-            style={{ backgroundColor: "#C96A3D", color: "#F8F4EC" }}
-          >
-            Explore Heritage <ArrowRight size={16} />
-          </button>
+          <Magnetic>
+            <button
+              type="button"
+              onClick={(e) => { e.preventDefault(); document.getElementById('map')?.scrollIntoView({behavior: 'smooth'}); }}
+              className="font-body mt-10 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-transform hover:scale-105"
+              style={{ backgroundColor: "#C96A3D", color: "#F8F4EC" }}
+            >
+              Explore Heritage <ArrowRight size={16} />
+            </button>
+          </Magnetic>
         </Reveal>
       </motion.div>
 
@@ -1064,14 +1090,16 @@ function FeaturedCollection() {
 
         {COLLECTION.length > 8 && (
           <Reveal delay={0.1} className="flex justify-center mt-14">
-            <Link
-              to="/koleksi"
-              className="font-body inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-transform hover:scale-105"
-              style={{ backgroundColor: "#214E3B", color: "#F8F4EC" }}
-            >
-              Jelajahi Koleksi Lainnya
-              <ArrowRight size={16} />
-            </Link>
+            <Magnetic>
+              <Link
+                to="/koleksi"
+                className="font-body inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-transform hover:scale-105"
+                style={{ backgroundColor: "#214E3B", color: "#F8F4EC" }}
+              >
+                Jelajahi Koleksi Lainnya
+                <ArrowRight size={16} />
+              </Link>
+            </Magnetic>
           </Reveal>
         )}
       </div>
@@ -1117,14 +1145,16 @@ function JoinPreservation() {
             ))}
           </div>
 
-          <button
-            type="button"
-            onClick={(e) => { e.preventDefault(); document.getElementById('collection')?.scrollIntoView({behavior: 'smooth'}); }}
-            className="font-body mt-9 inline-flex items-center gap-2 rounded-full px-8 py-4 text-sm font-medium transition-transform hover:scale-105"
-            style={{ backgroundColor: "#C96A3D", color: "#F8F4EC" }}
-          >
-            Start Exploring <ArrowRight size={16} />
-          </button>
+          <Magnetic>
+            <button
+              type="button"
+              onClick={(e) => { e.preventDefault(); document.getElementById('collection')?.scrollIntoView({behavior: 'smooth'}); }}
+              className="font-body mt-9 inline-flex items-center gap-2 rounded-full px-8 py-4 text-sm font-medium transition-transform hover:scale-105"
+              style={{ backgroundColor: "#C96A3D", color: "#F8F4EC" }}
+            >
+              Start Exploring <ArrowRight size={16} />
+            </button>
+          </Magnetic>
         </Reveal>
       </div>
     </section>
