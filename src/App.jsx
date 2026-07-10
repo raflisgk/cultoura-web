@@ -290,11 +290,29 @@ function Navbar() {
   const location = useLocation();
   const onLanding = location.pathname === "/";
 
+  const [activeHash, setActiveHash] = useState("");
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40);
+      
+      if (onLanding) {
+        const sections = ["map", "discover", "artisans", "experience", "collection"];
+        let current = "";
+        for (const id of sections) {
+          const el = document.getElementById(id);
+          if (el && el.getBoundingClientRect().top <= 150) {
+            current = "#" + id;
+          }
+        }
+        setActiveHash((prev) => prev !== current ? current : prev);
+      }
+    };
+    
     window.addEventListener("scroll", onScroll);
+    onScroll(); // Inisialisasi awal
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [onLanding]);
 
   const links = [
     ["Heritage Map", "#map"],
@@ -305,6 +323,9 @@ function Navbar() {
   ];
 
   const NavLink = ({ href, children, ...rest }) => {
+    const isActive = onLanding && href === activeHash;
+    const computedStyle = isActive ? { ...rest.style, color: "#C96A3D", opacity: 1, fontWeight: 500 } : rest.style;
+
     const handleClick = (e) => {
       if (onLanding && href.startsWith("#")) {
         e.preventDefault();
@@ -327,9 +348,9 @@ function Navbar() {
       }
     };
     return onLanding ? (
-      <a href={href} {...rest} onClick={handleClick}>{children}</a>
+      <a href={href} {...rest} style={computedStyle} onClick={handleClick}>{children}</a>
     ) : (
-      <Link to={`/${href}`} {...rest}>{children}</Link>
+      <Link to={`/${href}`} {...rest} style={computedStyle}>{children}</Link>
     );
   };
 
