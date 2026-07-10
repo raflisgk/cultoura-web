@@ -217,7 +217,7 @@ function IntroCurtain({ done, setDone }) {
                 strokeWidth={3}
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 0 }}
+                initial={{ pathLength: 0, opacity: 1 }}
                 animate={{ pathLength: 1, opacity: 1 }}
                 transition={{ duration: 2.5, ease: "linear" }}
               />
