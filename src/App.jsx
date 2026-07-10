@@ -424,6 +424,7 @@ function Hero() {
           <Magnetic>
             <a
               href="#map"
+              onClick={(e) => { e.preventDefault(); document.getElementById('map')?.scrollIntoView({behavior: 'smooth'}); }}
               className="font-body mt-10 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium"
               style={{ backgroundColor: "#C96A3D", color: "#F8F4EC" }}
             >
@@ -791,6 +792,7 @@ function StoryBehindProduct() {
             <Magnetic>
               <a
                 href="#collection"
+                onClick={(e) => { e.preventDefault(); document.getElementById('collection')?.scrollIntoView({behavior: 'smooth'}); }}
                 className="font-body mt-8 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium"
                 style={{ backgroundColor: "#214E3B", color: "#F8F4EC" }}
               >
@@ -1088,6 +1090,7 @@ function JoinPreservation() {
           <Magnetic>
             <a
               href="#collection"
+              onClick={(e) => { e.preventDefault(); document.getElementById('collection')?.scrollIntoView({behavior: 'smooth'}); }}
               className="font-body mt-9 inline-flex items-center gap-2 rounded-full px-8 py-4 text-sm font-medium"
               style={{ backgroundColor: "#C96A3D", color: "#F8F4EC" }}
             >
