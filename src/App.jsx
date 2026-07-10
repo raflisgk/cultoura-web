@@ -17,7 +17,7 @@ const FONTS = `
   .font-body { font-family: 'Manrope', sans-serif; }
   html { scroll-behavior: smooth; }
   ::selection { background: #C96A3D; color: #F8F4EC; }
-  @media (pointer: fine) { .cultoura-root { cursor: none; } }
+  
 `;
 
 
@@ -192,85 +192,6 @@ function KineticText({ text, className, style, delay = 0 }) {
 }
 
 // Magnetic hover effect for buttons
-function Magnetic({ children, strength = 0.35 }) {
-  const ref = useRef(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const sx = useSpring(x, { stiffness: 150, damping: 12 });
-  const sy = useSpring(y, { stiffness: 150, damping: 12 });
-
-  const onMove = useCallback((e) => {
-    const el = ref.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    x.set((e.clientX - r.left - r.width / 2) * strength);
-    y.set((e.clientY - r.top - r.height / 2) * strength);
-  }, [strength, x, y]);
-
-  const onLeave = useCallback(() => { x.set(0); y.set(0); }, [x, y]);
-
-  return (
-    <motion.div ref={ref} onMouseMove={onMove} onMouseLeave={onLeave} style={{ x: sx, y: sy, display: "inline-block" }}>
-      {children}
-    </motion.div>
-  );
-}
-
-// Custom cursor
-function CustomCursor() {
-  const x = useMotionValue(-100);
-  const y = useMotionValue(-100);
-  const sx = useSpring(x, { stiffness: 500, damping: 40 });
-  const sy = useSpring(y, { stiffness: 500, damping: 40 });
-  const [state, setState] = useState({ big: false, text: "" });
-
-  useEffect(() => {
-    const move = (e) => {
-      x.set(e.clientX);
-      y.set(e.clientY);
-      const el = document.elementFromPoint(e.clientX, e.clientY);
-      const target = el?.closest("a,button,[data-cursor-big]");
-      setState({
-        big: !!target,
-        text: target?.getAttribute("data-cursor-text") || ""
-      });
-    };
-    window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
-  }, [x, y]);
-
-  return (
-    <motion.div
-      className="hidden md:flex items-center justify-center font-display text-[10px] tracking-widest uppercase pointer-events-none z-[9999]"
-      style={{
-        position: "fixed", left: 0, top: 0, x: sx, y: sy, translateX: "-50%", translateY: "-50%",
-        width: state.text ? 72 : (state.big ? 46 : 10), 
-        height: state.text ? 72 : (state.big ? 46 : 10), 
-        borderRadius: "50%",
-        border: state.big ? "1px solid rgba(201,106,61,0.5)" : "none",
-        backgroundColor: state.text ? "#C96A3D" : (state.big ? "rgba(201,106,61,0.08)" : "#C96A3D"),
-        backdropFilter: state.big && !state.text ? "blur(2px)" : "none",
-        color: "#F8F4EC",
-        transition: "width 0.2s, height 0.2s, background-color 0.2s, backdrop-filter 0.2s"
-      }}
-    >
-      <AnimatePresence>
-        {state.text && (
-          <motion.span 
-            initial={{ opacity: 0, scale: 0.5 }} 
-            animate={{ opacity: 1, scale: 1 }} 
-            exit={{ opacity: 0, scale: 0.5 }}
-          >
-            {state.text}
-          </motion.span>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
-}
-
-// Intro curtain animation
-
 function IntroCurtain({ done, setDone }) {
   useEffect(() => {
     const t = setTimeout(() => setDone(true), 1900);
@@ -394,15 +315,7 @@ function Navbar() {
             </NavLink>
           ))}
         </div>
-        <Magnetic strength={0.4}>
-          <NavLink
-            href="#preserve"
-            className="hidden md:inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-body text-sm font-medium"
-            style={{ backgroundColor: "#214E3B", color: "#F8F4EC" }}
-          >
-            Explore Heritage
-          </NavLink>
-        </Magnetic>
+        
         <button className="md:hidden p-2 -mr-2" onClick={() => setOpen(!open)} style={{ color: "#214E3B" }} aria-label="Menu">
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -475,16 +388,7 @@ function Hero() {
           </p>
         </Reveal>
         <Reveal delay={1.65}>
-          <Magnetic>
-            <button
-              type="button"
-              onClick={(e) => { e.preventDefault(); document.getElementById('map')?.scrollIntoView({behavior: 'smooth'}); }}
-              className="font-body mt-10 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium"
-              style={{ backgroundColor: "#C96A3D", color: "#F8F4EC" }}
-            >
-              Explore Heritage <ArrowRight size={16} />
-            </button>
-          </Magnetic>
+          
         </Reveal>
       </motion.div>
 
@@ -538,7 +442,7 @@ function HeritageMap() {
                   className="absolute -translate-x-1/2 -translate-y-1/2 group"
                   style={{ left: `${r.x}%`, top: `${r.y}%`, zIndex: active.id === r.id ? 10 : 1 }}
                   aria-label={r.name}
-                  data-cursor-big
+                  
                 >
                   <motion.span
                     className="block rounded-full"
@@ -656,8 +560,8 @@ function DiscoverHeritage() {
           {CRAFTS.map((c, i) => (
             <Reveal key={c.name} delay={i * 0.08}>
               <motion.div
-                data-cursor-big
-                data-cursor-text="Lihat"
+                
+                
                 onHoverStart={() => { if (window.matchMedia('(hover: hover)').matches) setHovered(c.name) }}
                 onHoverEnd={() => { if (window.matchMedia('(hover: hover)').matches) setHovered(null) }}
                 onClick={() => setHovered(hovered === c.name ? null : c.name)}
@@ -904,16 +808,7 @@ function StoryBehindProduct() {
               </div>
             </div>
 
-            <Magnetic>
-              <button
-                type="button"
-                onClick={(e) => { e.preventDefault(); document.getElementById('collection')?.scrollIntoView({behavior: 'smooth'}); }}
-                className="font-body mt-8 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium"
-                style={{ backgroundColor: "#214E3B", color: "#F8F4EC" }}
-              >
-                Shop This Heritage <ChevronRight size={15} />
-              </button>
-            </Magnetic>
+            
           </Reveal>
         </div>
       </div>
@@ -944,7 +839,7 @@ function ExperienceCard({ e }) {
 
   return (
     <div
-      data-cursor-big
+      
       className="group relative rounded-2xl overflow-hidden"
       style={{ aspectRatio: "3/4" }}
       onMouseEnter={handleEnter}
@@ -1067,7 +962,7 @@ function ProductTile({ p, index, hovered, setHovered }) {
   const bg = COLLECTION_GRADIENTS[index % COLLECTION_GRADIENTS.length];
   return (
     <div
-      data-cursor-big
+      
       className="relative rounded-2xl overflow-hidden cursor-pointer"
       style={{ aspectRatio: "3/4", background: bg }}
       onMouseEnter={() => { if (window.matchMedia('(hover: hover)').matches) setHovered(p.name) }}
@@ -1148,16 +1043,7 @@ function FeaturedCollection() {
 
         {COLLECTION.length > 8 && (
           <Reveal delay={0.1} className="flex justify-center mt-14">
-            <Magnetic>
-              <Link
-                to="/koleksi"
-                className="font-body inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium"
-                style={{ backgroundColor: "#214E3B", color: "#F8F4EC" }}
-              >
-                Jelajahi Koleksi Lainnya
-                <ArrowRight size={16} />
-              </Link>
-            </Magnetic>
+            
           </Reveal>
         )}
       </div>
@@ -1203,16 +1089,7 @@ function JoinPreservation() {
             ))}
           </div>
 
-          <Magnetic>
-            <button
-              type="button"
-              onClick={(e) => { e.preventDefault(); document.getElementById('collection')?.scrollIntoView({behavior: 'smooth'}); }}
-              className="font-body mt-9 inline-flex items-center gap-2 rounded-full px-8 py-4 text-sm font-medium"
-              style={{ backgroundColor: "#C96A3D", color: "#F8F4EC" }}
-            >
-              Start Exploring <ArrowRight size={16} />
-            </button>
-          </Magnetic>
+          
         </Reveal>
       </div>
     </section>
@@ -1330,7 +1207,7 @@ function Layout({ children }) {
   return (
     <div className="font-body cultoura-root" style={{ backgroundColor: "#F8F4EC" }}>
       <style>{FONTS}</style>
-      <CustomCursor />
+      
       <Navbar />
       {children}
       <Footer />
@@ -1526,15 +1403,7 @@ function AboutPage() {
             <p className="font-body text-sm md:text-base mt-5 max-w-2xl mx-auto" style={{ color: "rgba(248,244,236,0.75)" }}>
               Cultoura terus bertumbuh bersama para pengrajin, kreator, dan pencerita budaya. Jika kamu ingin ikut menjaga warisan Indonesia lewat teknologi dan cerita, kirimkan perkenalan singkatmu — kami senang mendengarnya.
             </p>
-            <Magnetic strength={0.4}>
-              <a
-                href="mailto:hello@cultoura.id"
-                className="mt-8 inline-flex items-center gap-2 rounded-full px-7 py-3.5 font-body text-sm font-medium"
-                style={{ backgroundColor: "#C96A3D", color: "#F8F4EC" }}
-              >
-                Hubungi Kami <ArrowRight size={16} />
-              </a>
-            </Magnetic>
+            
           </Reveal>
         </div>
       </section>
