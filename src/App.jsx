@@ -32,58 +32,58 @@ const UMBER = "#4A2E1E";
 // pin sits exactly where that city is on the archipelago.
 
 const REGIONS = [
-  { id: "aceh", name: "Aceh", x: 0.9, y: 11.7, craft: "Kerawang Gayo", story: "Sulaman benang emas khas Gayo ini menghiasi busana adat, setiap motifnya menyimpan filosofi adat dan alam Tanah Rencong.", image: "/images/kerawanggayoaceh.jpg" },
-  { id: "sumut", name: "Sumatra Utara", x: 8.4, y: 25.4, craft: "Ulos", story: "Di tepi Danau Toba, kain Ulos ditenun sebagai lambang restu — diberikan saat kelahiran, pernikahan, hingga kematian.", image: "/images/ulossumatrautara.jpg" },
-  { id: "sumbar", name: "Sumatra Barat", x: 11.8, y: 39.2, craft: "Tenun Songket Minang", story: "Benang emas ditenun dengan tangan di Pandai Sikek, diwariskan dari nenek ke cucu, seutas demi seutas.", image: "/images/tenunsongketminangsumbar.jpg" },
-  { id: "sumsel", name: "Sumatra Selatan", x: 21.3, y: 51.8, craft: "Songket Palembang", story: "Songket Palembang dahulu hanya dikenakan bangsawan Kesultanan — kilau benang emasnya masih ditenun dengan cara yang sama hingga kini.", image: "/images/songketpalembangsumsel.jpg" },
-  { id: "jabar", name: "Jawa Barat", x: 29.4, y: 69.3, craft: "Batik Mega Mendung", story: "Motif awan dari Cirebon ini lahir dari akulturasi budaya Tionghoa dan pesisir Jawa, melambangkan kesabaran menahan amarah.", image: "/images/batikmegamendungjabar.jpg" },
-  { id: "jateng", name: "Jawa Tengah", x: 34.3, y: 73.4, craft: "Batik Tulis", story: "Di Solo, malam panas dan katun bertemu membentuk pola yang dulu menandai derajat dan upacara adat.", image: "/images/batiktulisjateng.jpg" },
-  { id: "yogya", name: "D.I. Yogyakarta", x: 33.3, y: 74.5, craft: "Wayang Kulit", story: "Kulit kerbau ditatah dan diwarnai selama berminggu-minggu sebelum tampil menuturkan epos semalam suntuk.", image: "/images/wayangkulitjogja.jpg" },
-  { id: "jepara", name: "Jepara", x: 34, y: 68.8, craft: "Ukiran Jepara", story: "Satu panel relief bisa memakan waktu tiga bulan, dipahat dengan kesabaran tanpa henti.", image: "/images/ukiranjepara.jpg" },
-  { id: "malang", name: "Jawa Timur", x: 38.2, y: 75.3, craft: "Topeng Malangan", story: "Topeng dari kayu mahoni, dicat untuk menampung roh raja-raja masa lampau.", image: "/images/topengmalanganjatim.jpg" },
-  { id: "bali", name: "Bali", x: 43.9, y: 77.8, craft: "Ukiran & Perak", story: "Di Ubud, ukiran adalah doa yang dibuat kasat mata; di Celuk, perak ditempa jadi perhiasan upacara turun-temurun.", image: "/images/ukiran&perakbali.jpg" },
-  { id: "ntb", name: "Nusa Tenggara Barat", x: 46.2, y: 78.9, craft: "Tenun Songket Sasak", story: "Di Desa Sukarara, Lombok, gadis Sasak belajar menenun sejak kecil — songketnya jadi bekal restu sebelum menikah.", image: "/images/tenunsongketsasakntb.jpg" },
-  { id: "ntt_sikka", name: "NTT · Sikka", x: 58.9, y: 78.4, craft: "Tenun Ikat", story: "Diikat dan diwarnai dengan tangan selama berminggu-minggu sebelum satu benang pun menyentuh alat tenun.", image: "/images/tenunikatsikkantt.jpg" },
-  { id: "ntt_sumba", name: "NTT · Sumba", x: 53.9, y: 83.3, craft: "Tenun Ikat Sumba", story: "Motif kuda dan skull tree pada Hinggi Sumba menandakan derajat penenunnya — sebagian pola hanya boleh dipakai bangsawan.", image: "/images/tentunikatsumbantt.jpg" },
-  { id: "kalbar", name: "Kalimantan Barat", x: 31.1, y: 37.9, craft: "Tenun Corak Insang", story: "Pola bersisik ikan dari Pontianak ini menenun identitas pesisir Melayu Kalimantan ke dalam benang songket.", image: "/images/tenuncorakinsangkalbar.jpg" },
-  { id: "kalteng", name: "Kalimantan Tengah", x: 39.8, y: 45.7, craft: "Anyaman Rotan Dayak", story: "Rotan hutan dianyam suku Dayak menjadi tas dan tikar dengan motif burung enggang, penjaga spiritual masyarakat adat.", image: "/images/anyamanrotandayakkaltim.jpg" },
-  { id: "sulsel", name: "Sulawesi Selatan", x: 53.7, y: 52.2, craft: "Ukiran & Tenun Toraja", story: "Rumah Tongkonan diukir penuh simbol leluhur, sementara benang sutra Toraja ditenun untuk upacara Rambu Solo.", image: "/images/songketpalembangsumsel.jpg" },
-  { id: "gorontalo", name: "Gorontalo", x: 60.7, y: 35.3, craft: "Karawo", story: "Sulaman kerawang khas Gorontalo ini dikerjakan dengan mencabut serat kain satu per satu sebelum disulam ulang jadi motif.", image: "/images/karawogorontalo.jpg" },
-  { id: "maluku", name: "Maluku", x: 71.8, y: 55.1, craft: "Tenun & Ukiran Maluku", story: "Kain tenun dan ukiran kayu di Kepulauan Maluku merekam jalur rempah yang pernah menghubungkan nusantara ke dunia.", image: "/images/tenunmaluku.jpg" },
-  { id: "papua_wamena", name: "Papua Pegunungan", x: 95, y: 57, craft: "Noken", story: "Dirajut dari serat kulit kayu tanpa alat tenun, Noken dipakai membawa hasil bumi sekaligus simbol kedewasaan perempuan Papua.", image: "/images/nokenpapua.jpg" },
-  { id: "papua_asmat", name: "Papua Selatan", x: 93.1, y: 61.7, craft: "Ukiran Asmat", story: "Ukiran suku Asmat memahat silsilah leluhur ke dalam kayu, menjadikan setiap patung sebuah pohon keluarga yang hidup.", image: "/images/ukiranasmatpapua.jpg" },
+  { id: "aceh", name: "Aceh", x: 0.9, y: 11.7, craft: "Kerawang Gayo", story: "Sulaman benang emas khas Gayo ini menghiasi busana adat, setiap motifnya menyimpan filosofi adat dan alam Tanah Rencong.", image: "./images/kerawanggayoaceh.jpg" },
+  { id: "sumut", name: "Sumatra Utara", x: 8.4, y: 25.4, craft: "Ulos", story: "Di tepi Danau Toba, kain Ulos ditenun sebagai lambang restu — diberikan saat kelahiran, pernikahan, hingga kematian.", image: "./images/ulossumatrautara.jpg" },
+  { id: "sumbar", name: "Sumatra Barat", x: 11.8, y: 39.2, craft: "Tenun Songket Minang", story: "Benang emas ditenun dengan tangan di Pandai Sikek, diwariskan dari nenek ke cucu, seutas demi seutas.", image: "./images/tenunsongketminangsumbar.jpg" },
+  { id: "sumsel", name: "Sumatra Selatan", x: 21.3, y: 51.8, craft: "Songket Palembang", story: "Songket Palembang dahulu hanya dikenakan bangsawan Kesultanan — kilau benang emasnya masih ditenun dengan cara yang sama hingga kini.", image: "./images/songketpalembangsumsel.jpg" },
+  { id: "jabar", name: "Jawa Barat", x: 29.4, y: 69.3, craft: "Batik Mega Mendung", story: "Motif awan dari Cirebon ini lahir dari akulturasi budaya Tionghoa dan pesisir Jawa, melambangkan kesabaran menahan amarah.", image: "./images/batikmegamendungjabar.jpg" },
+  { id: "jateng", name: "Jawa Tengah", x: 34.3, y: 73.4, craft: "Batik Tulis", story: "Di Solo, malam panas dan katun bertemu membentuk pola yang dulu menandai derajat dan upacara adat.", image: "./images/batiktulisjateng.jpg" },
+  { id: "yogya", name: "D.I. Yogyakarta", x: 33.3, y: 74.5, craft: "Wayang Kulit", story: "Kulit kerbau ditatah dan diwarnai selama berminggu-minggu sebelum tampil menuturkan epos semalam suntuk.", image: "./images/wayangkulitjogja.jpg" },
+  { id: "jepara", name: "Jepara", x: 34, y: 68.8, craft: "Ukiran Jepara", story: "Satu panel relief bisa memakan waktu tiga bulan, dipahat dengan kesabaran tanpa henti.", image: "./images/ukiranjepara.jpg" },
+  { id: "malang", name: "Jawa Timur", x: 38.2, y: 75.3, craft: "Topeng Malangan", story: "Topeng dari kayu mahoni, dicat untuk menampung roh raja-raja masa lampau.", image: "./images/topengmalanganjatim.jpg" },
+  { id: "bali", name: "Bali", x: 43.9, y: 77.8, craft: "Ukiran & Perak", story: "Di Ubud, ukiran adalah doa yang dibuat kasat mata; di Celuk, perak ditempa jadi perhiasan upacara turun-temurun.", image: "./images/ukiran&perakbali.jpg" },
+  { id: "ntb", name: "Nusa Tenggara Barat", x: 46.2, y: 78.9, craft: "Tenun Songket Sasak", story: "Di Desa Sukarara, Lombok, gadis Sasak belajar menenun sejak kecil — songketnya jadi bekal restu sebelum menikah.", image: "./images/tenunsongketsasakntb.jpg" },
+  { id: "ntt_sikka", name: "NTT · Sikka", x: 58.9, y: 78.4, craft: "Tenun Ikat", story: "Diikat dan diwarnai dengan tangan selama berminggu-minggu sebelum satu benang pun menyentuh alat tenun.", image: "./images/tenunikatsikkantt.jpg" },
+  { id: "ntt_sumba", name: "NTT · Sumba", x: 53.9, y: 83.3, craft: "Tenun Ikat Sumba", story: "Motif kuda dan skull tree pada Hinggi Sumba menandakan derajat penenunnya — sebagian pola hanya boleh dipakai bangsawan.", image: "./images/tentunikatsumbantt.jpg" },
+  { id: "kalbar", name: "Kalimantan Barat", x: 31.1, y: 37.9, craft: "Tenun Corak Insang", story: "Pola bersisik ikan dari Pontianak ini menenun identitas pesisir Melayu Kalimantan ke dalam benang songket.", image: "./images/tenuncorakinsangkalbar.jpg" },
+  { id: "kalteng", name: "Kalimantan Tengah", x: 39.8, y: 45.7, craft: "Anyaman Rotan Dayak", story: "Rotan hutan dianyam suku Dayak menjadi tas dan tikar dengan motif burung enggang, penjaga spiritual masyarakat adat.", image: "./images/anyamanrotandayakkaltim.jpg" },
+  { id: "sulsel", name: "Sulawesi Selatan", x: 53.7, y: 52.2, craft: "Ukiran & Tenun Toraja", story: "Rumah Tongkonan diukir penuh simbol leluhur, sementara benang sutra Toraja ditenun untuk upacara Rambu Solo.", image: "./images/songketpalembangsumsel.jpg" },
+  { id: "gorontalo", name: "Gorontalo", x: 60.7, y: 35.3, craft: "Karawo", story: "Sulaman kerawang khas Gorontalo ini dikerjakan dengan mencabut serat kain satu per satu sebelum disulam ulang jadi motif.", image: "./images/karawogorontalo.jpg" },
+  { id: "maluku", name: "Maluku", x: 71.8, y: 55.1, craft: "Tenun & Ukiran Maluku", story: "Kain tenun dan ukiran kayu di Kepulauan Maluku merekam jalur rempah yang pernah menghubungkan nusantara ke dunia.", image: "./images/tenunmaluku.jpg" },
+  { id: "papua_wamena", name: "Papua Pegunungan", x: 95, y: 57, craft: "Noken", story: "Dirajut dari serat kulit kayu tanpa alat tenun, Noken dipakai membawa hasil bumi sekaligus simbol kedewasaan perempuan Papua.", image: "./images/nokenpapua.jpg" },
+  { id: "papua_asmat", name: "Papua Selatan", x: 93.1, y: 61.7, craft: "Ukiran Asmat", story: "Ukiran suku Asmat memahat silsilah leluhur ke dalam kayu, menjadikan setiap patung sebuah pohon keluarga yang hidup.", image: "./images/ukiranasmatpapua.jpg" },
 ];
 
 const CRAFTS = [
-  { name: "Batik", region: "Jawa", desc: "Cerita yang dilukis dengan malam, goresan demi goresan di atas kain.", image: "/images/batikjawa.jpg" },
-  { name: "Wayang Kulit", region: "Jawa & Bali", desc: "Boneka kulit yang membawa epos berusia seribu tahun menembus malam.", image: "/images/wayangkulitjawa.jpg" },
-  { name: "Topeng Malangan", region: "Malang", desc: "Topeng ukir yang mengizinkan penari menjelma raja, raksasa, atau badut.", image: "/images/topengmalanganjatim.jpg" },
-  { name: "Ukiran Jepara", region: "Jepara", desc: "Kayu jati diukir menjadi relief seindah renda, kerajinan yang membentuk identitas satu kota.", image: "/images/ukiranjepara.jpg" },
-  { name: "Tenun Ikat", region: "NTT", desc: "Benang diikat dan diwarnai sebelum ditenun, sehingga pola hidup di dalam benangnya.", image: "/images/tenunikatsikkantt.jpg" },
-  { name: "Ulos", region: "Sumatra Utara", desc: "Kain tenun Batak yang diberikan sebagai lambang restu dalam setiap babak kehidupan.", image: "/images/ulossumatrautara.jpg" },
-  { name: "Songket", region: "Sumatra & Bali", desc: "Benang emas dan perak ditenun jadi kain yang dulu hanya dikenakan bangsawan.", image: "/images/tenunsongketminangsumbar.jpg" },
-  { name: "Ukiran Asmat", region: "Papua", desc: "Pahatan kayu yang menghidupkan silsilah leluhur ke dalam setiap patung.", image: "/images/ukiranasmatpapua.jpg" },
-  { name: "Noken", region: "Papua Pegunungan", desc: "Anyaman serat kulit kayu, dirajut tangan tanpa alat tenun sama sekali.", image: "/images/nokenpapua.jpg" },
+  { name: "Batik", region: "Jawa", desc: "Cerita yang dilukis dengan malam, goresan demi goresan di atas kain.", image: "./images/batikjawa.jpg" },
+  { name: "Wayang Kulit", region: "Jawa & Bali", desc: "Boneka kulit yang membawa epos berusia seribu tahun menembus malam.", image: "./images/wayangkulitjawa.jpg" },
+  { name: "Topeng Malangan", region: "Malang", desc: "Topeng ukir yang mengizinkan penari menjelma raja, raksasa, atau badut.", image: "./images/topengmalanganjatim.jpg" },
+  { name: "Ukiran Jepara", region: "Jepara", desc: "Kayu jati diukir menjadi relief seindah renda, kerajinan yang membentuk identitas satu kota.", image: "./images/ukiranjepara.jpg" },
+  { name: "Tenun Ikat", region: "NTT", desc: "Benang diikat dan diwarnai sebelum ditenun, sehingga pola hidup di dalam benangnya.", image: "./images/tenunikatsikkantt.jpg" },
+  { name: "Ulos", region: "Sumatra Utara", desc: "Kain tenun Batak yang diberikan sebagai lambang restu dalam setiap babak kehidupan.", image: "./images/ulossumatrautara.jpg" },
+  { name: "Songket", region: "Sumatra & Bali", desc: "Benang emas dan perak ditenun jadi kain yang dulu hanya dikenakan bangsawan.", image: "./images/tenunsongketminangsumbar.jpg" },
+  { name: "Ukiran Asmat", region: "Papua", desc: "Pahatan kayu yang menghidupkan silsilah leluhur ke dalam setiap patung.", image: "./images/ukiranasmatpapua.jpg" },
+  { name: "Noken", region: "Papua Pegunungan", desc: "Anyaman serat kulit kayu, dirajut tangan tanpa alat tenun sama sekali.", image: "./images/nokenpapua.jpg" },
 ];
 
 const ARTISANS = [
   {
     name: "Ibu Sulastri", craft: "Batik Tulis", location: "Solo, Jawa Tengah", years: 32,
     story: "Sulastri belajar memegang canting sebelum belajar membaca. Kini sanggarnya melatih dua belas perempuan muda yang dulu mengira batik tak punya masa depan.",
-    portrait: "/images/batiktulisjateng.jpg",
-    workshop: "/images/batiktulispengrajin.jpg",
+    portrait: "./images/batiktulisjateng.jpg",
+    workshop: "./images/batiktulispengrajin.jpg",
   },
   {
     name: "Pak Wayan Sudarsana", craft: "Ukiran Kayu", location: "Ubud, Bali", years: 27,
     story: "Setiap panel yang diukir Wayan diawali doa di pura keluarga. Baginya, ukiran tanpa niat hanyalah hiasan semata.",
-    portrait: "/images/ukiranjepara.jpg",
-    workshop: "/images/tempatukiran.jpg",
+    portrait: "./images/ukiranjepara.jpg",
+    workshop: "./images/tempatukiran.jpg",
   },
   {
     name: "Ibu Maria Bete", craft: "Tenun Ikat", location: "Sikka, NTT", years: 19,
     story: "Koperasi sebelas penenun milik Maria mewarnai setiap benang dengan akar dan kulit kayu dari kampung mereka sendiri, persis seperti yang diajarkan ibunya.",
-    portrait: "/images/tenunikatsikkantt.jpg",
-    workshop: "/images/tenunikatpengrajin.jpg",
+    portrait: "./images/tenunikatsikkantt.jpg",
+    workshop: "./images/tenunikatpengrajin.jpg",
   },
 ];
 
@@ -97,29 +97,29 @@ const TIMELINE = [
 ];
 
 const EXPERIENCES = [
-  { title: "Kelas Membatik", place: "Solo", image: "/images/batiktulispengrajin.jpg", video: "https://videos.pexels.com/video-files/30408573/13031910_1440_2560_24fps.mp4" },
+  { title: "Kelas Membatik", place: "Solo", image: "./images/batiktulispengrajin.jpg", video: "https://videos.pexels.com/video-files/30408573/13031910_1440_2560_24fps.mp4" },
   { title: "Tur Desa Virtual", place: "Ubud", image: img("photo-1518548419970-58e3b4079ab2", 900, 700), video: "https://videos.pexels.com/video-files/29781865/12797150_2560_1440_30fps.mp4" },
-  { title: "Temu Penenun", place: "Sikka", image: "/images/tenunikatsikkantt.jpg", video: "https://videos.pexels.com/video-files/37810391/16038068_1080_1920_60fps.mp4" },
+  { title: "Temu Penenun", place: "Sikka", image: "./images/tenunikatsikkantt.jpg", video: "https://videos.pexels.com/video-files/37810391/16038068_1080_1920_60fps.mp4" },
   { title: "Malam Purnama Budaya", place: "Yogyakarta", image: img("photo-1596402184320-417e7178b2cd", 900, 700), video: "https://videos.pexels.com/video-files/32947306/14041577_1920_1080_25fps.mp4" },
 ];
 
 const COLLECTION = [
-  { name: "Selendang Batik Sekar Jagad", artisan: "Ibu Sulastri", location: "Solo, Jawa Tengah", price: "Rp 1.250.000", tag: "Batik", image: "/images/batiktulisjateng.jpg" },
-  { name: "Kain Ulos Ragi Hotang", artisan: "Sanggar Toba", location: "Danau Toba, Sumut", price: "Rp 1.650.000", tag: "Tenun", image: "/images/ulossumatrautara.jpg" },
-  { name: "Songket Palembang Limar", artisan: "Sanggar Songket Palembang", location: "Palembang", price: "Rp 4.200.000", tag: "Tenun", image: "/images/songketpalembangsumsel.jpg" },
-  { name: "Wayang Kulit Arjuna", artisan: "Ki Slamet", location: "Yogyakarta", price: "Rp 2.100.000", tag: "Wayang", image: "/images/wayangkulitjogja.jpg" },
-  { name: "Topeng Malangan Klana", artisan: "Sanggar Topeng Malang", location: "Malang", price: "Rp 1.450.000", tag: "Ukiran", image: "/images/topengmalanganjatim.jpg" },
-  { name: "Noken Rajut Wamena", artisan: "Kolektif Mama Papua", location: "Wamena, Papua", price: "Rp 620.000", tag: "Anyaman", image: "/images/nokenpapua.jpg" },
-  { name: "Ukiran Asmat Leluhur", artisan: "Sanggar Asmat", location: "Papua Selatan", price: "Rp 5.600.000", tag: "Ukiran", image: "/images/ukiranasmatpapua.jpg" },
-  { name: "Batik Mega Mendung Cirebon", artisan: "Sanggar Trusmi", location: "Cirebon, Jawa Barat", price: "Rp 1.100.000", tag: "Batik", image: "/images/batikmegamendungjabar.jpg" },
-  { name: "Tenun Songket Sasak", artisan: "Sanggar Sukarara", location: "Lombok, NTB", price: "Rp 1.850.000", tag: "Tenun", image: "/images/tenunsongketsasakntb.jpg" },
-  { name: "Hinggi Tenun Ikat Sumba", artisan: "Sanggar Sumba Timur", location: "Sumba, NTT", price: "Rp 3.400.000", tag: "Tenun", image: "/images/tentunikatsumbantt.jpg" },
-  { name: "Ukiran Tongkonan Toraja", artisan: "Sanggar Toraja", location: "Tana Toraja, Sulsel", price: "Rp 2.750.000", tag: "Ukiran", image: "/images/tempatukiran.jpg" },
-  { name: "Relief Ukir Jepara", artisan: "Sanggar Jepara Jati", location: "Jepara, Jawa Tengah", price: "Rp 3.900.000", tag: "Ukiran", image: "/images/ukiranjepara.jpg" },
-  { name: "Sulam Karawo Gorontalo", artisan: "Sanggar Karawo", location: "Gorontalo", price: "Rp 890.000", tag: "Batik", image: "/images/karawogorontalo.jpg" },
-  { name: "Kerawang Gayo Emas", artisan: "Sanggar Gayo Lues", location: "Aceh", price: "Rp 1.560.000", tag: "Batik", image: "/images/kerawanggayoaceh.jpg" },
-  { name: "Anyaman Rotan Dayak", artisan: "Koperasi Dayak Kalteng", location: "Kalimantan Tengah", price: "Rp 740.000", tag: "Anyaman", image: "/images/anyamanrotandayakkaltim.jpg" },
-  { name: "Ukiran Perak Celuk", artisan: "Sanggar Celuk Silver", location: "Ubud, Bali", price: "Rp 2.300.000", tag: "Ukiran", image: "/images/ukiran&perakbali.jpg" },
+  { name: "Selendang Batik Sekar Jagad", artisan: "Ibu Sulastri", location: "Solo, Jawa Tengah", price: "Rp 1.250.000", tag: "Batik", image: "./images/batiktulisjateng.jpg" },
+  { name: "Kain Ulos Ragi Hotang", artisan: "Sanggar Toba", location: "Danau Toba, Sumut", price: "Rp 1.650.000", tag: "Tenun", image: "./images/ulossumatrautara.jpg" },
+  { name: "Songket Palembang Limar", artisan: "Sanggar Songket Palembang", location: "Palembang", price: "Rp 4.200.000", tag: "Tenun", image: "./images/songketpalembangsumsel.jpg" },
+  { name: "Wayang Kulit Arjuna", artisan: "Ki Slamet", location: "Yogyakarta", price: "Rp 2.100.000", tag: "Wayang", image: "./images/wayangkulitjogja.jpg" },
+  { name: "Topeng Malangan Klana", artisan: "Sanggar Topeng Malang", location: "Malang", price: "Rp 1.450.000", tag: "Ukiran", image: "./images/topengmalanganjatim.jpg" },
+  { name: "Noken Rajut Wamena", artisan: "Kolektif Mama Papua", location: "Wamena, Papua", price: "Rp 620.000", tag: "Anyaman", image: "./images/nokenpapua.jpg" },
+  { name: "Ukiran Asmat Leluhur", artisan: "Sanggar Asmat", location: "Papua Selatan", price: "Rp 5.600.000", tag: "Ukiran", image: "./images/ukiranasmatpapua.jpg" },
+  { name: "Batik Mega Mendung Cirebon", artisan: "Sanggar Trusmi", location: "Cirebon, Jawa Barat", price: "Rp 1.100.000", tag: "Batik", image: "./images/batikmegamendungjabar.jpg" },
+  { name: "Tenun Songket Sasak", artisan: "Sanggar Sukarara", location: "Lombok, NTB", price: "Rp 1.850.000", tag: "Tenun", image: "./images/tenunsongketsasakntb.jpg" },
+  { name: "Hinggi Tenun Ikat Sumba", artisan: "Sanggar Sumba Timur", location: "Sumba, NTT", price: "Rp 3.400.000", tag: "Tenun", image: "./images/tentunikatsumbantt.jpg" },
+  { name: "Ukiran Tongkonan Toraja", artisan: "Sanggar Toraja", location: "Tana Toraja, Sulsel", price: "Rp 2.750.000", tag: "Ukiran", image: "./images/tempatukiran.jpg" },
+  { name: "Relief Ukir Jepara", artisan: "Sanggar Jepara Jati", location: "Jepara, Jawa Tengah", price: "Rp 3.900.000", tag: "Ukiran", image: "./images/ukiranjepara.jpg" },
+  { name: "Sulam Karawo Gorontalo", artisan: "Sanggar Karawo", location: "Gorontalo", price: "Rp 890.000", tag: "Batik", image: "./images/karawogorontalo.jpg" },
+  { name: "Kerawang Gayo Emas", artisan: "Sanggar Gayo Lues", location: "Aceh", price: "Rp 1.560.000", tag: "Batik", image: "./images/kerawanggayoaceh.jpg" },
+  { name: "Anyaman Rotan Dayak", artisan: "Koperasi Dayak Kalteng", location: "Kalimantan Tengah", price: "Rp 740.000", tag: "Anyaman", image: "./images/anyamanrotandayakkaltim.jpg" },
+  { name: "Ukiran Perak Celuk", artisan: "Sanggar Celuk Silver", location: "Ubud, Bali", price: "Rp 2.300.000", tag: "Ukiran", image: "./images/ukiran&perakbali.jpg" },
 ];
 
 const COLLECTION_TAG_ICON = { Batik: PenTool, Ukiran: Hammer, Tenun: Waves, Wayang: Scroll, Anyaman: Package, Keris: Swords };
@@ -707,7 +707,7 @@ function WeavingIllustration() {
   return (
     <div className="relative rounded-3xl overflow-hidden" style={{ aspectRatio: "4/3" }}>
       <img
-        src="/images/tenunikatsikkantt.jpg"
+        src="./images/tenunikatsikkantt.jpg"
         alt="Proses menenun"
         className="w-full h-full object-cover"
       />
