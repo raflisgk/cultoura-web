@@ -309,9 +309,20 @@ function Navbar() {
       if (onLanding && href.startsWith("#")) {
         e.preventDefault();
         const el = document.getElementById(href.substring(1));
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        if (el) {
+          setTimeout(() => {
+            try {
+              el.scrollIntoView({ behavior: 'smooth' });
+            } catch (err) {
+              el.scrollIntoView();
+            }
+          }, 50);
+        }
       }
-      if (rest.onClick) rest.onClick(e);
+      if (rest.onClick) {
+        // Beri jeda sangat singkat agar animasi tutup menu tidak membatalkan scroll di iOS
+        setTimeout(() => rest.onClick(e), 10);
+      }
     };
     return onLanding ? (
       <a href={href} {...rest} onClick={handleClick}>{children}</a>
@@ -349,8 +360,8 @@ function Navbar() {
             Explore Heritage
           </NavLink>
         </Magnetic>
-        <button className="md:hidden" onClick={() => setOpen(!open)} style={{ color: "#214E3B" }} aria-label="Menu">
-          {open ? <X size={22} /> : <Menu size={22} />}
+        <button className="md:hidden p-2 -mr-2" onClick={() => setOpen(!open)} style={{ color: "#214E3B" }} aria-label="Menu">
+          {open ? <X size={24} /> : <Menu size={24} />}
         </button>
       </nav>
       <AnimatePresence>
