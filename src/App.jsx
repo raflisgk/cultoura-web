@@ -424,7 +424,7 @@ function HeritageMap() {
             <div className="relative overflow-hidden rounded-3xl" style={{ backgroundColor: "#EDE6D6" }}>
               <motion.div 
                 className="relative aspect-[1000/460]"
-                animate={{ scale: zoomedRegion ? 3.5 : 1 }}
+                animate={{ scale: zoomedRegion ? 2.2 : 1 }}
                 style={{ transformOrigin: `${active.x}% ${active.y}%` }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               >
