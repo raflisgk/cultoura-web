@@ -194,7 +194,7 @@ function KineticText({ text, className, style, delay = 0 }) {
 // Magnetic hover effect for buttons
 function IntroCurtain({ done, setDone }) {
   useEffect(() => {
-    const t = setTimeout(() => setDone(true), 1900);
+    const t = setTimeout(() => setDone(true), 3200);
     return () => clearTimeout(t);
   }, [setDone]);
 
@@ -202,21 +202,40 @@ function IntroCurtain({ done, setDone }) {
     <AnimatePresence>
       {!done && (
         <motion.div
-          className="fixed inset-0 z-[999] flex items-center justify-center"
+          className="fixed inset-0 z-[99999] flex flex-col items-center justify-center overflow-hidden"
           style={{ backgroundColor: "#214E3B" }}
           initial={{ clipPath: "inset(0% 0% 0% 0%)" }}
           exit={{ clipPath: "inset(0% 0% 100% 0%)" }}
-          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+          transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
         >
-          <motion.p
-            className="font-display text-3xl md:text-4xl tracking-tight"
-            style={{ color: "#F8F4EC" }}
-            initial={{ opacity: 0, letterSpacing: "0.3em" }}
-            animate={{ opacity: 1, letterSpacing: "0em" }}
-            transition={{ duration: 1.1, ease: "easeOut" }}
+          <div className="w-64 md:w-96 mb-6">
+            <svg viewBox={INDONESIA_VIEWBOX} className="w-full h-auto drop-shadow-2xl">
+              <motion.path
+                d={INDONESIA_PATH}
+                fill="none"
+                stroke="#C8A25A"
+                strokeWidth={3}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 2, ease: "easeInOut" }}
+              />
+            </svg>
+          </div>
+          <motion.div
+            className="flex flex-col items-center"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.5, ease: "easeOut" }}
           >
-            Cultoura
-          </motion.p>
+            <p className="font-display text-2xl md:text-3xl tracking-[0.15em] uppercase" style={{ color: "#F8F4EC" }}>
+              Cultoura
+            </p>
+            <p className="font-body text-[10px] md:text-xs tracking-widest mt-2 uppercase" style={{ color: "#C8A25A" }}>
+              Every Heritage Has a Future
+            </p>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
@@ -692,41 +711,36 @@ const TIMELINE_ICONS = { Leaf, Droplet, Shuffle, Sparkles, Package, Truck };
 
 function StoryTimeline() {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 75%", "end 55%"] });
-  const width = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const { scrollYProgress } = useScroll({ target: ref });
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
 
   return (
-    <div ref={ref} className="relative mt-12 md:mt-16">
-      <div className="relative">
-        <div className="hidden md:block absolute left-0 right-0 top-[19px] h-px" style={{ backgroundColor: "rgba(33,78,59,0.18)" }}>
-          <motion.div className="h-px" style={{ width, backgroundColor: "#C96A3D" }} />
-        </div>
-        <div className="md:hidden absolute left-[19px] top-0 bottom-0 w-px" style={{ backgroundColor: "rgba(33,78,59,0.18)" }}>
-          <motion.div className="w-px" style={{ height: width, backgroundColor: "#C96A3D" }} />
-        </div>
-        <div className="relative flex flex-col md:flex-row items-start justify-between gap-10 md:gap-0">
+    <div ref={ref} className="relative h-[300vh] w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] my-10">
+      <div className="sticky top-0 flex h-screen items-center overflow-hidden bg-[#EDE6D6]">
+        <motion.div style={{ x }} className="flex w-[400vw]">
           {TIMELINE.map((step, i) => {
             const Icon = TIMELINE_ICONS[step.icon];
             const isLast = i === TIMELINE.length - 1;
             return (
-              <div key={step.label} className="flex flex-row md:flex-col items-start md:items-center flex-1 text-left md:text-center px-0 md:px-1 gap-6 md:gap-0">
-                <div
-                  className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center relative z-10"
-                  style={{
-                    backgroundColor: isLast ? "#C96A3D" : "#F8F4EC",
-                    border: `1.5px solid ${isLast ? "#C96A3D" : "rgba(33,78,59,0.3)"}`,
-                  }}
+              <div 
+                key={step.label} 
+                className="w-screen flex-shrink-0 flex flex-col md:flex-row items-center justify-center px-6 md:px-20 gap-8 md:gap-16"
+              >
+                <div 
+                  className="w-40 h-40 md:w-64 md:h-64 rounded-full flex items-center justify-center shadow-xl relative z-10 transition-transform hover:scale-105"
+                  style={{ backgroundColor: isLast ? "#C96A3D" : "#F8F4EC", border: `2px solid ${isLast ? "#C96A3D" : "rgba(33,78,59,0.2)"}` }}
                 >
-                  <Icon size={16} color={isLast ? "#F8F4EC" : "#214E3B"} strokeWidth={1.6} />
+                  <Icon size={isLast ? 72 : 64} color={isLast ? "#F8F4EC" : "#214E3B"} strokeWidth={1} />
                 </div>
-                <div className="flex-1 md:mt-4">
-                  <p className="font-display text-lg" style={{ color: "#214E3B" }}>{step.label}</p>
-                  <p className="font-body text-xs mt-1 md:mt-2" style={{ color: "rgba(33,78,59,0.7)" }}>{step.desc}</p>
+                <div className="text-center md:text-left max-w-lg">
+                  <span className="font-body text-xs md:text-sm uppercase tracking-widest font-semibold" style={{ color: "#C96A3D" }}>Tahap {i + 1}</span>
+                  <p className="font-display text-4xl md:text-6xl mt-2 mb-4" style={{ color: "#214E3B" }}>{step.label.replace(/^\d+\.\s*/, '')}</p>
+                  <p className="font-body text-lg md:text-2xl leading-relaxed" style={{ color: "rgba(33,78,59,0.75)" }}>{step.desc}</p>
                 </div>
               </div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
@@ -762,9 +776,9 @@ function StoryBehindProduct() {
           </h2>
         </Reveal>
 
-        <Reveal delay={0.15}>
+        <div className="mt-16 md:mt-24">
           <StoryTimeline />
-        </Reveal>
+        </div>
 
         <div className="grid md:grid-cols-2 gap-10 mt-20 items-start">
           <Reveal>
