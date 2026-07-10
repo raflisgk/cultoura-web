@@ -683,19 +683,22 @@ function StoryTimeline() {
   const width = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <div ref={ref} className="relative mt-16 overflow-x-auto">
-      <div className="relative min-w-[760px] md:min-w-0">
-        <div className="absolute left-0 right-0 top-[19px] h-px" style={{ backgroundColor: "rgba(33,78,59,0.18)" }}>
+    <div ref={ref} className="relative mt-12 md:mt-16">
+      <div className="relative">
+        <div className="hidden md:block absolute left-0 right-0 top-[19px] h-px" style={{ backgroundColor: "rgba(33,78,59,0.18)" }}>
           <motion.div className="h-px" style={{ width, backgroundColor: "#C96A3D" }} />
         </div>
-        <div className="relative flex items-start justify-between">
+        <div className="md:hidden absolute left-[19px] top-0 bottom-0 w-px" style={{ backgroundColor: "rgba(33,78,59,0.18)" }}>
+          <motion.div className="w-px" style={{ height: width, backgroundColor: "#C96A3D" }} />
+        </div>
+        <div className="relative flex flex-col md:flex-row items-start justify-between gap-10 md:gap-0">
           {TIMELINE.map((step, i) => {
             const Icon = TIMELINE_ICONS[step.icon];
             const isLast = i === TIMELINE.length - 1;
             return (
-              <div key={step.label} className="flex flex-col items-center flex-1 text-center px-1">
+              <div key={step.label} className="flex flex-row md:flex-col items-start md:items-center flex-1 text-left md:text-center px-0 md:px-1 gap-6 md:gap-0">
                 <div
-                  className="w-10 h-10 rounded-full flex items-center justify-center"
+                  className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center relative z-10"
                   style={{
                     backgroundColor: isLast ? "#C96A3D" : "#F8F4EC",
                     border: `1.5px solid ${isLast ? "#C96A3D" : "rgba(33,78,59,0.3)"}`,
@@ -703,7 +706,10 @@ function StoryTimeline() {
                 >
                   <Icon size={16} color={isLast ? "#F8F4EC" : "#214E3B"} strokeWidth={1.6} />
                 </div>
-                <p className="font-body text-xs md:text-sm mt-3" style={{ color: "#214E3B" }}>{step.label}</p>
+                <div className="flex-1 md:mt-4">
+                  <p className="font-display text-lg" style={{ color: "#214E3B" }}>{step.label}</p>
+                  <p className="font-body text-xs mt-1 md:mt-2" style={{ color: "rgba(33,78,59,0.7)" }}>{step.desc}</p>
+                </div>
               </div>
             );
           })}
@@ -922,7 +928,7 @@ function StatCard({ stat, inView, delay }) {
   return (
     <Reveal delay={delay}>
       <div className="border-t pt-6" style={{ borderColor: "rgba(248,244,236,0.2)" }}>
-        <p className="font-display text-4xl md:text-5xl" style={{ color: "#C96A3D" }}>
+        <p className="font-display text-3xl md:text-5xl" style={{ color: "#C96A3D" }}>
           {count.toLocaleString("id-ID")}{stat.suffix}
         </p>
         <p className="font-body text-sm mt-2" style={{ color: "rgba(248,244,236,0.75)" }}>{stat.label}</p>
@@ -936,7 +942,7 @@ function StatCardLight({ stat, inView, delay }) {
   return (
     <Reveal delay={delay}>
       <div className="border-t pt-6" style={{ borderColor: "rgba(33,78,59,0.15)" }}>
-        <p className="font-display text-4xl md:text-5xl" style={{ color: "#C96A3D" }}>
+        <p className="font-display text-3xl md:text-5xl" style={{ color: "#C96A3D" }}>
           {count.toLocaleString("id-ID")}{stat.suffix}
         </p>
         <p className="font-body text-sm mt-2" style={{ color: "rgba(33,78,59,0.7)" }}>{stat.label}</p>
