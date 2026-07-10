@@ -364,7 +364,7 @@ function Navbar() {
           >
             <div className="flex flex-col gap-4 px-6 pb-6 font-body text-sm" style={{ color: "#214E3B" }}>
               {links.map(([label, href]) => (
-                <NavLink key={href} href={href} onClick={() => setOpen(false)}>{label}</NavLink>
+                <NavLink key={href} href={href} className="block py-2 text-base" onClick={() => setOpen(false)}>{label}</NavLink>
               ))}
             </div>
           </motion.div>
@@ -550,8 +550,8 @@ function DiscoverHeritage() {
             <Reveal key={c.name} delay={i * 0.08}>
               <motion.div
                 data-cursor-big
-                onHoverStart={() => setHovered(c.name)}
-                onHoverEnd={() => setHovered(null)}
+                onHoverStart={() => { if (window.matchMedia('(hover: hover)').matches) setHovered(c.name) }}
+                onHoverEnd={() => { if (window.matchMedia('(hover: hover)').matches) setHovered(null) }}
                 onClick={() => setHovered(hovered === c.name ? null : c.name)}
                 className="relative rounded-2xl overflow-hidden cursor-pointer"
                 style={{ height: 380 }}
@@ -962,8 +962,8 @@ function ProductTile({ p, index, hovered, setHovered }) {
       data-cursor-big
       className="relative rounded-2xl overflow-hidden cursor-pointer"
       style={{ aspectRatio: "3/4", background: bg }}
-      onMouseEnter={() => setHovered(p.name)}
-      onMouseLeave={() => setHovered(null)}
+      onMouseEnter={() => { if (window.matchMedia('(hover: hover)').matches) setHovered(p.name) }}
+      onMouseLeave={() => { if (window.matchMedia('(hover: hover)').matches) setHovered(null) }}
       onClick={() => setHovered(hovered === p.name ? null : p.name)}
     >
       {p.image && (
