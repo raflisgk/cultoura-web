@@ -1,27 +1,24 @@
-# Cultoura
+# Cultoura Web
 
-Landing page untuk Cultoura — platform digital yang menghubungkan perajin lokal dengan generasi masa kini melalui storytelling budaya.
+Project web app untuk Cultoura. Dibuat pakai React (Vite) + Tailwind CSS + Framer Motion.
 
-## Menjalankan secara lokal
+## Setup Lokal
+
+Kalo mau run di lokal, tinggal install dependencies terus jalanin vite dev server:
 
 ```bash
 npm install
 npm run dev
 ```
 
-Buka `http://localhost:5173` di browser.
+Server jalan di `http://localhost:5173`.
 
-## Build untuk produksi
+## Build
+
+Buat generate file production:
 
 ```bash
 npm run build
 ```
 
-Hasil build ada di folder `dist/`, siap di-deploy ke Vercel, Netlify, atau hosting statis lainnya.
-
-## Stack
-
-- React + Vite
-- Tailwind CSS
-- Framer Motion
-- Lucide Icons
+Nanti file buildnya masuk ke folder `dist/`. Bisa di-deploy ke hosting mana aja kayak Vercel atau Netlify.
