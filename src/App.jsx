@@ -219,21 +219,26 @@ function IntroCurtain({ done, setDone }) {
                 strokeLinejoin="round"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 2, ease: "easeInOut" }}
+                transition={{ duration: 2.5, ease: "linear" }}
               />
               <motion.g
-                initial={{ offsetDistance: "0%", opacity: 0, scale: 0 }}
-                animate={{ offsetDistance: "100%", opacity: 1, scale: 1 }}
-                transition={{ duration: 2, ease: "easeInOut" }}
-                style={{ 
-                  offsetPath: `path('${INDONESIA_PATH}')`,
-                  // Rotate pen so tip points to the line (approximate)
-                  transform: "rotate(-45deg) translate(-12px, -12px)" 
-                }}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3 }}
               >
-                <foreignObject width={48} height={48} style={{ overflow: 'visible' }}>
-                  <PenTool size={24} color="#F8F4EC" strokeWidth={1.5} style={{ filter: "drop-shadow(0px 4px 6px rgba(0,0,0,0.5))" }} />
-                </foreignObject>
+                <g>
+                  {/* Tip of PenTool is around bottom-left, adjust x/y to align it with path */}
+                  <foreignObject width={32} height={32} x="-4" y="-22" style={{ overflow: 'visible' }}>
+                    <PenTool size={24} color="#F8F4EC" strokeWidth={1.5} style={{ filter: "drop-shadow(0px 4px 6px rgba(0,0,0,0.5))" }} />
+                  </foreignObject>
+                  <animateMotion
+                    dur="2.5s"
+                    repeatCount="1"
+                    fill="freeze"
+                    calcMode="linear"
+                    path={INDONESIA_PATH}
+                  />
+                </g>
               </motion.g>
             </svg>
           </div>
