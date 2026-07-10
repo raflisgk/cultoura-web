@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, AnimatePresence, useInView, useMotionV
 import {
   ArrowRight, ArrowLeft, ArrowDown, MapPin, Play, ChevronRight, Sparkles, Heart, Menu, X,
   ShoppingBag, Ticket, HandHeart, Leaf, Droplet, Shuffle, Package, Truck,
-  Quote, Globe2, Users, Layers, PenTool, Waves, Scroll, Swords, Hammer, Volume2, VolumeX
+  Quote, Globe2, Users, Layers, PenTool, Waves, Scroll, Swords, Hammer
 } from "lucide-react";
 import { INDONESIA_PATH, INDONESIA_VIEWBOX } from "./indonesiaMap";
 
@@ -1542,71 +1542,14 @@ function AboutPage() {
   );
 }
 
-// Soundscape (Web Audio API)
-let audioCtx = null;
-const playClick = () => {
-  try {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.05);
-    
-    gain.gain.setValueAtTime(0, audioCtx.currentTime);
-    gain.gain.linearRampToValueAtTime(0.15, audioCtx.currentTime + 0.01);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
-    
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    
-    osc.start();
-    osc.stop(audioCtx.currentTime + 0.06);
-  } catch(e) {}
-};
-
-function SoundscapeController() {
-  const [enabled, setEnabled] = useState(false);
-
-  useEffect(() => {
-    if (!enabled) return;
-    const handleMouseOver = (e) => {
-      if (e.target.closest("a, button, [data-cursor-big]")) {
-        playClick();
-      }
-    };
-    document.addEventListener("mouseover", handleMouseOver);
-    return () => document.removeEventListener("mouseover", handleMouseOver);
-  }, [enabled]);
-
-  return (
-    <button 
-      onClick={() => setEnabled(!enabled)}
-      className="fixed bottom-6 left-6 z-[999] p-3 rounded-full shadow-lg transition-transform hover:scale-110 active:scale-95 group"
-      style={{ backgroundColor: enabled ? "#C96A3D" : "#F8F4EC", color: enabled ? "#F8F4EC" : "#214E3B", border: "1px solid rgba(33,78,59,0.15)" }}
-      aria-label="Toggle Sound"
-    >
-      {enabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
-      <span className="absolute left-full ml-3 top-1/2 -translate-y-1/2 bg-black/70 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-        {enabled ? "Suara Aktif" : "Suara Nonaktif"}
-      </span>
-    </button>
-  );
-}
-
 // App
 
 export default function App() {
   return (
-    <>
-      <SoundscapeController />
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/koleksi" element={<CollectionPage />} />
-        <Route path="/tentang-kami" element={<AboutPage />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/koleksi" element={<CollectionPage />} />
+      <Route path="/tentang-kami" element={<AboutPage />} />
+    </Routes>
   );
 }
