@@ -469,7 +469,7 @@ function HeritageMap() {
               <AnimatePresence>
                 {zoomedRegion && (
                   <motion.div 
-                    className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm"
+                    className="fixed inset-0 z-[9999] md:absolute md:inset-0 md:z-50 flex items-center justify-center bg-black/60 md:bg-black/40 backdrop-blur-sm"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -477,7 +477,7 @@ function HeritageMap() {
                     onClick={() => setZoomedRegion(null)}
                   >
                     <motion.div 
-                      className="p-3 rounded-xl shadow-2xl max-w-[280px] md:max-w-xs w-full mx-4 cursor-default"
+                      className="p-3 md:p-2.5 rounded-xl shadow-2xl max-w-[280px] md:max-w-[230px] w-full mx-4 cursor-default"
                       style={{ backgroundColor: "#FFFDF9" }}
                       initial={{ scale: 0.8, y: 20, rotate: -2 }}
                       animate={{ scale: 1, y: 0, rotate: 0 }}
@@ -485,13 +485,13 @@ function HeritageMap() {
                       transition={{ type: "spring", stiffness: 300, damping: 25 }}
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <img src={zoomedRegion.image} alt={zoomedRegion.craft} className="w-full h-40 object-cover rounded-lg" />
+                      <img src={zoomedRegion.image} alt={zoomedRegion.craft} className="w-full h-40 md:h-28 object-cover rounded-lg" />
                       <div className="mt-3 px-1">
                         <div className="flex items-center gap-1 font-body text-[10px] uppercase tracking-wider" style={{ color: "#C96A3D" }}>
                           <MapPin size={11} /> {zoomedRegion.name}
                         </div>
-                        <h3 className="font-display text-xl mt-1 leading-tight" style={{ color: "#214E3B" }}>{zoomedRegion.craft}</h3>
-                        <p className="font-body text-xs mt-2 leading-relaxed line-clamp-3" style={{ color: "rgba(33,78,59,0.75)" }}>
+                        <h3 className="font-display text-xl md:text-lg mt-1 leading-tight" style={{ color: "#214E3B" }}>{zoomedRegion.craft}</h3>
+                        <p className="font-body text-xs md:text-[10px] leading-relaxed mt-2 line-clamp-3" style={{ color: "rgba(33,78,59,0.75)" }}>
                           {zoomedRegion.story}
                         </p>
                         <button 
