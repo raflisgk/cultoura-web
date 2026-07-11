@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, AnimatePresence, useInView, useMotionV
 import {
   ArrowRight, ArrowLeft, ArrowDown, MapPin, Play, ChevronRight, Sparkles, Heart, Menu, X,
   ShoppingBag, Ticket, HandHeart, Leaf, Droplet, Shuffle, Package, Truck,
-  Quote, Globe2, Users, Layers, PenTool, Waves, Scroll, Swords, Hammer
+  Quote, Globe2, Users, Layers, PenTool, Waves, Scroll, Swords, Hammer, Plus, Minus
 } from "lucide-react";
 import { INDONESIA_PATH, INDONESIA_VIEWBOX } from "./indonesiaMap";
 
@@ -88,12 +88,31 @@ const ARTISANS = [
 ];
 
 const TIMELINE = [
-  { label: "Kapas Mentah", icon: "Leaf" },
-  { label: "Pewarna Alami", icon: "Droplet" },
-  { label: "Menenun", icon: "Shuffle" },
-  { label: "Penyempurnaan", icon: "Sparkles" },
-  { label: "Produk Jadi", icon: "Package" },
-  { label: "Sampai di Tanganmu", icon: "Truck" },
+  { label: "Kapas Mentah", icon: "Leaf", desc: "Dipanen dari ladang lokal", image: "./images/kapasmentah.jpg" },
+  { label: "Pewarna Alami", icon: "Droplet", desc: "Ekstrak dedaunan & akar", image: "./images/pewarna-alami.jpg" },
+  { label: "Menenun", icon: "Shuffle", desc: "Ditenun helai demi helai", image: "./images/menenunkaintenunikat.jpg" },
+  { label: "Penyempurnaan", icon: "Sparkles", desc: "Detail akhir & kualitas", image: "./images/penyempurnaan.jpg" },
+  { label: "Produk Jadi", icon: "Package", desc: "Karya siap dikemas", image: "./images/produktenun.jpg" },
+  { label: "Sampai di Tanganmu", icon: "Truck", desc: "Diterima dengan cerita", image: "./images/sampaiditanganmu.jpg" },
+];
+
+const FAQS = [
+  {
+    question: "Bagaimana cara merawat kain tenun dan batik tradisional?",
+    answer: "Kain tradisional sebaiknya dicuci menggunakan tangan dengan lerak atau sampo bayi, hindari mesin cuci dan deterjen berbahan keras. Jemur di tempat teduh agar warna alaminya tidak cepat pudar."
+  },
+  {
+    question: "Berapa lama proses pembuatan satu helai kain?",
+    answer: "Tergantung tingkat kerumitannya, pembuatan satu helai kain dapat memakan waktu mulai dari 2 minggu hingga lebih dari 3 bulan, karena seluruh prosesnya murni menggunakan tenaga manual dan dikerjakan dengan penuh ketelitian."
+  },
+  {
+    question: "Apakah Cultoura mengirimkan pesanan ke luar Indonesia?",
+    answer: "Tentu! Kami menyediakan pengiriman internasional ke lebih dari 50 negara dengan jaminan asuransi pengiriman agar karya seni ini tiba di tangan Anda dengan selamat."
+  },
+  {
+    question: "Apakah saya bisa memesan motif khusus (kustom)?",
+    answer: "Ya, kami melayani pemesanan (pre-order) motif khusus atau pemesanan seragam dengan minimal jumlah tertentu. Anda bisa langsung menghubungi artisan kami melalui tombol layanan pelanggan."
+  }
 ];
 
 const EXPERIENCES = [
@@ -745,31 +764,116 @@ const TIMELINE_ICONS = { Leaf, Droplet, Shuffle, Sparkles, Package, Truck };
 function StoryTimeline() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref });
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0vw", `-${(TIMELINE.length - 1) * 100}vw`]);
 
   return (
     <div ref={ref} className="relative h-[300vh] w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] my-10">
       <div className="sticky top-0 flex h-screen items-center overflow-hidden bg-[#EDE6D6]">
-        <motion.div style={{ x }} className="flex w-[400vw]">
+        <motion.div style={{ x }} className="flex w-fit">
           {TIMELINE.map((step, i) => {
             const Icon = TIMELINE_ICONS[step.icon];
             const isLast = i === TIMELINE.length - 1;
             return (
               <div 
                 key={step.label} 
-                className="w-screen flex-shrink-0 flex flex-col md:flex-row items-center justify-center px-6 md:px-20 gap-8 md:gap-16"
+                className="w-screen flex-shrink-0 flex flex-col md:flex-row items-center justify-center px-6 md:px-20 gap-6 md:gap-10 relative"
               >
+                {step.image && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 30, rotate: i % 2 === 0 ? -10 : 10 }}
+                    whileInView={{ opacity: 1, y: 0, rotate: i % 2 === 0 ? 4 : -4 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    className={`hidden md:block absolute w-48 h-60 rounded-xl shadow-2xl overflow-hidden border-[6px] z-0`}
+                    style={{ 
+                      borderColor: "#F8F4EC",
+                      ...(i % 2 === 0 ? { top: '15%', right: '15%' } : { bottom: '15%', left: '15%' })
+                    }}
+                  >
+                    <img src={step.image} alt={step.label} className="w-full h-full object-cover" />
+                  </motion.div>
+                )}
+
                 <div 
-                  className="w-40 h-40 md:w-64 md:h-64 rounded-full flex items-center justify-center shadow-xl relative z-10 transition-transform hover:scale-105"
+                  className="w-28 h-28 md:w-40 md:h-40 rounded-full flex items-center justify-center shadow-lg relative z-10 transition-transform hover:scale-105"
                   style={{ backgroundColor: isLast ? "#C96A3D" : "#F8F4EC", border: `2px solid ${isLast ? "#C96A3D" : "rgba(33,78,59,0.2)"}` }}
                 >
-                  <Icon size={isLast ? 72 : 64} color={isLast ? "#F8F4EC" : "#214E3B"} strokeWidth={1} />
+                  <Icon size={isLast ? 48 : 40} color={isLast ? "#F8F4EC" : "#214E3B"} strokeWidth={1.5} />
                 </div>
-                <div className="text-center md:text-left max-w-lg">
+                <div className="text-center md:text-left max-w-lg relative z-10">
                   <span className="font-body text-xs md:text-sm uppercase tracking-widest font-semibold" style={{ color: "#C96A3D" }}>Tahap {i + 1}</span>
-                  <p className="font-display text-4xl md:text-6xl mt-2 mb-4" style={{ color: "#214E3B" }}>{step.label.replace(/^\d+\.\s*/, '')}</p>
-                  <p className="font-body text-lg md:text-2xl leading-relaxed" style={{ color: "rgba(33,78,59,0.75)" }}>{step.desc}</p>
+                  <p className="font-display text-3xl md:text-4xl mt-2 mb-3" style={{ color: "#214E3B" }}>{step.label.replace(/^\d+\.\s*/, '')}</p>
+                  <p className="font-body text-base md:text-lg leading-relaxed" style={{ color: "rgba(33,78,59,0.8)" }}>{step.desc}</p>
                 </div>
+
+                {/* Fakta Singkat antara Tahap 2 dan 3 */}
+                {i === 1 && (
+                  <div className="absolute z-20 hidden md:flex right-0 top-1/4 translate-x-[45%] w-96 items-center justify-center pointer-events-none">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8, y: 30 }}
+                      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                      transition={{ type: "spring", stiffness: 100, damping: 15 }}
+                      className="relative overflow-hidden p-8 rounded-3xl shadow-2xl border border-white/50"
+                      style={{ 
+                        background: "linear-gradient(135deg, rgba(248, 244, 236, 0.95) 0%, rgba(237, 230, 214, 0.85) 100%)",
+                        backdropFilter: "blur(20px)"
+                      }}
+                    >
+                      {/* Decorative Background Icon */}
+                      <Sparkles size={140} color="#C96A3D" className="absolute -top-10 -right-10 opacity-[0.04]" />
+                      
+                      <div className="flex items-center gap-3 mb-5 relative z-10">
+                        <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: "rgba(201, 106, 61, 0.12)" }}>
+                          <Sparkles size={18} color="#C96A3D" />
+                        </div>
+                        <span className="font-body text-sm font-bold uppercase tracking-[0.2em] text-[#C96A3D]">Fakta Menarik</span>
+                      </div>
+                      
+                      <p className="font-display text-xl md:text-2xl text-[#214E3B] leading-relaxed relative z-10 italic">
+                        "Benang yang telah diwarnai secara alami tak boleh langsung ditenun. Ia harus mengering bersabar di bawah terik matahari selama 3 hingga 5 hari."
+                      </p>
+                      
+                      {/* Subtle floating glow behind */}
+                      <div className="absolute -bottom-10 -left-10 w-40 h-40 rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: "rgba(201, 106, 61, 0.15)" }}></div>
+                    </motion.div>
+                  </div>
+                )}
+
+                {/* Kutipan Perajin antara Tahap 4 dan 5 */}
+                {i === 3 && (
+                  <div className="absolute z-20 hidden md:flex right-0 top-1/3 translate-x-[45%] w-96 items-center justify-center pointer-events-none">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8, y: -30 }}
+                      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                      transition={{ type: "spring", stiffness: 100, damping: 15 }}
+                      className="relative overflow-hidden p-8 rounded-3xl shadow-2xl border border-white/20"
+                      style={{ 
+                        background: "linear-gradient(135deg, rgba(33, 78, 59, 0.95) 0%, rgba(20, 40, 32, 0.9) 100%)",
+                        backdropFilter: "blur(20px)"
+                      }}
+                    >
+                      {/* Decorative Background Icon */}
+                      <Quote size={140} color="#F8F4EC" className="absolute -top-10 -left-10 opacity-[0.03]" />
+                      
+                      <div className="flex items-center gap-3 mb-5 relative z-10">
+                        <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: "rgba(248, 244, 236, 0.1)" }}>
+                          <Quote size={18} color="#F8F4EC" />
+                        </div>
+                        <span className="font-body text-sm font-bold uppercase tracking-[0.2em] text-[#F8F4EC]/80">Kutipan Perajin</span>
+                      </div>
+                      
+                      <p className="font-display text-xl md:text-2xl text-[#F8F4EC] leading-relaxed relative z-10 italic">
+                        "Kain ini bukan sekadar barang, melainkan doa dan ruh leluhur yang kami tenun dengan kedua belah tangan."
+                      </p>
+                      
+                      <p className="font-body text-sm text-[#F8F4EC]/60 mt-4 relative z-10 text-right">
+                        — Ibu Maria, Penenun Sikka
+                      </p>
+                      
+                      {/* Subtle floating glow behind */}
+                      <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: "rgba(248, 244, 236, 0.08)" }}></div>
+                    </motion.div>
+                  </div>
+                )}
               </div>
             );
           })}
@@ -1109,6 +1213,97 @@ function FeaturedCollection() {
 
 // Join the preservation section
 
+function FAQSection() {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const toggleFAQ = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
+  return (
+    <section className="py-24 md:py-32 bg-[#EDE6D6] relative overflow-hidden">
+      {/* Decorative bg */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#C96A3D]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#214E3B]/5 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4"></div>
+      
+      <div className="max-w-4xl mx-auto px-6 md:px-12 relative z-10">
+        <div className="text-center mb-16 md:mb-20">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#214E3B]/10 rounded-full mb-6"
+          >
+            <Sparkles size={14} color="#214E3B" />
+            <span className="font-body text-xs md:text-sm font-semibold tracking-wider text-[#214E3B] uppercase">Tanya Jawab</span>
+          </motion.div>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="font-display text-4xl md:text-5xl lg:text-6xl text-[#214E3B] leading-tight"
+          >
+            Pertanyaan <span className="italic text-[#C96A3D] font-medium">Populer</span>
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="font-body text-[#214E3B]/70 mt-4 md:text-lg max-w-xl mx-auto"
+          >
+            Temukan jawaban atas rasa penasaran Anda seputar koleksi, panduan perawatan, hingga layanan eksklusif kami.
+          </motion.p>
+        </div>
+
+        <div className="space-y-4">
+          {FAQS.map((faq, index) => {
+            const isOpen = openIndex === index;
+            return (
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 * index }}
+                key={index} 
+                className={`border rounded-3xl overflow-hidden transition-all duration-300 ${isOpen ? "bg-[#F8F4EC] border-[#C96A3D]/30 shadow-lg" : "bg-[#F8F4EC]/40 border-[#214E3B]/10 hover:border-[#214E3B]/30 hover:bg-[#F8F4EC]/80"}`}
+              >
+                <button
+                  onClick={() => toggleFAQ(index)}
+                  className="w-full text-left px-6 py-5 md:px-8 md:py-6 flex items-center justify-between gap-6 focus:outline-none"
+                >
+                  <span className="font-display text-xl md:text-2xl text-[#214E3B] pr-4">{faq.question}</span>
+                  <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${isOpen ? "bg-[#C96A3D] shadow-md shadow-[#C96A3D]/20" : "bg-[#214E3B]/5 group-hover:bg-[#214E3B]/10"}`}>
+                    {isOpen ? <Minus size={20} color="#F8F4EC" /> : <Plus size={20} color="#214E3B" />}
+                  </div>
+                </button>
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
+                    >
+                      <div className="px-6 pb-6 md:px-8 md:pb-8 pt-0">
+                        <div className="w-full h-[1px] bg-gradient-to-r from-[#214E3B]/10 to-transparent mb-5"></div>
+                        <p className="font-body text-base md:text-lg text-[#214E3B]/80 leading-relaxed">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function JoinPreservation() {
   return (
     <section id="preserve" className="relative py-32 px-6 md:px-10 overflow-hidden" style={{ backgroundColor: "#214E3B" }}>
@@ -1309,6 +1504,7 @@ function LandingPage() {
       <HeritageExperience />
       <Impact />
       <FeaturedCollection />
+      <FAQSection />
       <JoinPreservation />
     </Layout>
   );
